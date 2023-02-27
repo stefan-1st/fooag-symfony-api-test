@@ -11,7 +11,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
- * @ApiResource(normalizationContext={"groups"={"kunde"}, "enable_max_depth"=true})
+ * @ApiResource(
+ *     normalizationContext={"groups"={"kunde"}, "enable_max_depth"=true},
+ *     collectionOperations={
+ *         "get"={"path"="/kunden"},
+ *         "post"={"path"="/kunden"}
+ *     },
+ *     itemOperations={
+ *         "get"={"path"="/kunden/{id}"},
+ *         "put"={"path"="/kunden/{id}"},
+ *         "patch"={"path"="/kunden/{id}"},
+ *         "delete"={"path"="/kunden/{id}"},
+ *     }
+ * )
  * @ORM\Table(name="std.tbl_kunden")
  */
 class Kunde
