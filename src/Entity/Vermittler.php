@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
- * @ApiResource(normalizationContext={"groups"={"vermittler","kunde"}})
+ * @ApiResource(normalizationContext={"groups"={"vermittler"}})
  * @ORM\Table(name="std.vermittler")
  */
 class Vermittler
@@ -21,7 +21,7 @@ class Vermittler
      * @ORM\Id
      * @ORM\Column(type="string")
      * @ORM\GeneratedValue
-     * @Groups({"vermittler"})
+     * @Groups({"vermittler", "kunde"})
      */
     private $id = null;
 
@@ -30,7 +30,7 @@ class Vermittler
      * @ORM\Column(type="string", length=36)
      * @Assert\NotBlank
      * @Assert\Length(max=36)
-     * @Groups({"vermittler"})
+     * @Groups({"vermittler", "kunde"})
      */
     public $nummer = '';
 
@@ -39,7 +39,7 @@ class Vermittler
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"vermittler"})
+     * @Groups({"vermittler", "kunde"})
      */
     public $vorname = '';
 
@@ -48,7 +48,7 @@ class Vermittler
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"vermittler"})
+     * @Groups({"vermittler", "kunde"})
      */
     public $nachname = '';
 
@@ -57,14 +57,14 @@ class Vermittler
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"vermittler"})
+     * @Groups({"vermittler", "kunde"})
      */
     public $firma = '';
 
     /**
      * Markiert einen Vermittler als gelöscht.
      * @ORM\Column(type="boolean")
-     * @Groups({"vermittler"})
+     * @Groups({"vermittler", "kunde"})
      */
     public $geloescht = false;
 

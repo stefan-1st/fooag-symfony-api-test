@@ -23,7 +23,7 @@ class Kunde
      * @ORM\Column(type="string", length=36)
      * @ORM\GeneratedValue
      * @Assert\Length(max=36)
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     private $id = null;
 
@@ -32,7 +32,7 @@ class Kunde
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $name = '';
 
@@ -41,7 +41,7 @@ class Kunde
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $vorname = '';
 
@@ -49,7 +49,7 @@ class Kunde
      * Der Name der Firma, bei der der Kunde arbeitet.
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(max=255)
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $firma = '';
 
@@ -58,21 +58,21 @@ class Kunde
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
      * @Assert\DateTime
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $geburtsdatum = '';
 
     /**
      * Markiert einen Kunden als gelöscht.
      * @ORM\Column(type="boolean")
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $geloescht = false;
 
     /**
      * Das Geschlecht des Kunden.
      * @ORM\Column(type="string")
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $geschlecht = '';
 
@@ -80,7 +80,7 @@ class Kunde
      * Die E-Mail-Adresse, die der Kunde nutzt.
      * @ORM\Column(type="string")
      * @Assert\Email
-     * @Groups({"kunde"})
+     * @Groups({"kunde","vermittler"})
      */
     public $email = '';
 
