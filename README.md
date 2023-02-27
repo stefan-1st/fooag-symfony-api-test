@@ -24,6 +24,11 @@ composer install --ignore-platform-reqs --no-scripts
 docker-compose up --build
 ```
 
+### Dateisystem
+Um PHP das Erstellen von Dateien zu erlauben muss der `var`-Ordner angelegt und seine Rechte angepasst werden:
+```shell script
+sudo chown -R 33:33 var
+```
 ### PGAdmin
 Bei PGAdmin muss das Verzeichnis wie folgt geändert werden:
 ```shell script
@@ -33,6 +38,12 @@ sudo chown -R 5050:5050 .pgadmin
 Die Datenbank wird mit docker-compose automatisch erstellt und mit Testdaten befüllt. Diese Struktur kann und soll nicht angepasst werden. Es handelt sich hierbei um die einzige "legacy" Stelle des Banckends.
 
 Symfony sollte nun via http://localhost:8080 erreichbar sein
+
+### Assets
+Um ein sauberes API-Documentations-Frontend zu erhalten muss im PHP-Container folgendes Kommando ausgeführt werden:
+```shell script
+bin/console asset:install
+```
 
 ### Commits
 Bitte mache in regelmäßigen Abständen Commits deiner Arbeit, damit wir den Fortschritt nach verfolgen können, wenn du den PR aufmachst.
