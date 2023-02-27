@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
- * @ApiResource(normalizationContext={"groups"={"vermittler"}})
+ * @ApiResource(normalizationContext={"groups"={"vermittler"}, "enable_max_depth"=true})
  * @ORM\Table(name="std.vermittler")
  */
 class Vermittler

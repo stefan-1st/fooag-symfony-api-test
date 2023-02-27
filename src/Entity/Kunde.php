@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
- * @ApiResource(normalizationContext={"groups"={"kunde"}})
+ * @ApiResource(normalizationContext={"groups"={"kunde"}, "enable_max_depth"=true})
  * @ORM\Table(name="std.tbl_kunden")
  */
 class Kunde
