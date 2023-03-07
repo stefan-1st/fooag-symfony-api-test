@@ -6,11 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\DBAL\Exception\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="std.tbl_kunden")
  * @ApiResource(
  *     normalizationContext={"groups"={"kunde"}, "enable_max_depth"=true},
  *     collectionOperations={
@@ -24,7 +26,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         "delete"={"path"="/kunden/{id}"},
  *     }
  * )
- * @ORM\Table(name="std.tbl_kunden")
  */
 class Kunde
 {
@@ -32,8 +33,7 @@ class Kunde
      * Der eindeutige Identifier.
      * @var string
      * @ORM\Id
-     * @ORM\Column(type="string", length=36)
-     * @ORM\GeneratedValue
+     * @ORM\Column(name="id", type="string", columnDefinition="upper(left(gen_random_uuid()::text, 8))", options={"comment"="Column Comment Here"})
      * @Assert\Length(max=36)
      * @Groups({"kunde","vermittler"})
      */
@@ -69,14 +69,14 @@ class Kunde
      * Das Geburtsdatum, im Format 'yyyy-mm-dd'.
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
-     * @Assert\DateTime
+     * @Assert\Type("\DateTimeInterface")
      * @Groups({"kunde","vermittler"})
      */
     public $geburtsdatum = '';
 
     /**
      * Markiert einen Kunden als gelöscht.
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      * @Groups({"kunde","vermittler"})
      */
     public $geloescht = false;
@@ -98,6 +98,7 @@ class Kunde
 
     /**
      * @ORM\ManyToOne(targetEntity="Vermittler", inversedBy="kunden")
+     * @ORM\JoinColumn(nullable=false)
      * @Groups({"kunde"})
      */
     private $vermittler;
@@ -110,6 +111,12 @@ class Kunde
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
     public function getVermittler()
     {
         return $this->vermittler;
@@ -117,7 +124,7 @@ class Kunde
 
     public function setVermittler($vermittler)
     {
-        if (!is_a($vermittler, Vermittler)) {
+        if (!is_a($vermittler, 'App\Entity\Vermittler')) {
             throw new InvalidArgumentException('Es muss ein Vermittler übergeben werden.');
         }
 
