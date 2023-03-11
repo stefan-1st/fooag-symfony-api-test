@@ -33,7 +33,7 @@ class Vermittler
      * @ORM\Id
      * @ORM\Column(type="string")
      * @ORM\GeneratedValue
-     * @Groups({"vermittler", "kunde"})
+     * @Groups({"vermittler", "kunde:read"})
      */
     private $id = null;
 
@@ -42,7 +42,7 @@ class Vermittler
      * @ORM\Column(type="string", length=36)
      * @Assert\NotBlank
      * @Assert\Length(max=36)
-     * @Groups({"vermittler", "kunde"})
+     * @Groups({"vermittler", "kunde:read"})
      */
     public $nummer = '';
 
@@ -51,7 +51,7 @@ class Vermittler
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"vermittler", "kunde"})
+     * @Groups({"vermittler", "kunde:read"})
      */
     public $vorname = '';
 
@@ -60,7 +60,7 @@ class Vermittler
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"vermittler", "kunde"})
+     * @Groups({"vermittler", "kunde:read"})
      */
     public $nachname = '';
 
@@ -69,14 +69,14 @@ class Vermittler
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"vermittler", "kunde"})
+     * @Groups({"vermittler", "kunde:read"})
      */
     public $firma = '';
 
     /**
      * Markiert einen Vermittler als gelöscht.
      * @ORM\Column(type="boolean")
-     * @Groups({"vermittler", "kunde"})
+     * @Groups({"vermittler", "kunde:read"})
      */
     public $geloescht = false;
 

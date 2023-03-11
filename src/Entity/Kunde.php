@@ -14,7 +14,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity
  * @ORM\Table(name="std.tbl_kunden")
  * @ApiResource(
- *     normalizationContext={"groups"={"kunde"}, "enable_max_depth"=true},
+ *     normalizationContext={"groups"={"kunde:read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"kunde:write"}, "enable_max_depth"=true},
  *     collectionOperations={
  *         "get"={"path"="/kunden"},
  *         "post"={"path"="/kunden"}
@@ -35,7 +36,7 @@ class Kunde
      * @ORM\Id
      * @ORM\Column(name="id", type="string", columnDefinition="upper(left(gen_random_uuid()::text, 8))", options={"comment"="Column Comment Here"})
      * @Assert\Length(max=36)
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","vermittler"})
      */
     private $id = null;
 
@@ -44,7 +45,7 @@ class Kunde
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $name = '';
 
@@ -53,7 +54,7 @@ class Kunde
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      * @Assert\Length(max=255)
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $vorname = '';
 
@@ -61,7 +62,7 @@ class Kunde
      * Der Name der Firma, bei der der Kunde arbeitet.
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(max=255)
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $firma = '';
 
@@ -70,21 +71,21 @@ class Kunde
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
      * @Assert\Type("\DateTimeInterface")
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $geburtsdatum = '';
 
     /**
      * Markiert einen Kunden als gelöscht.
      * @ORM\Column(type="integer")
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $geloescht = false;
 
     /**
      * Das Geschlecht des Kunden.
      * @ORM\Column(type="string")
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $geschlecht = '';
 
@@ -92,36 +93,46 @@ class Kunde
      * Die E-Mail-Adresse, die der Kunde nutzt.
      * @ORM\Column(type="string")
      * @Assert\Email
-     * @Groups({"kunde","vermittler"})
+     * @Groups({"kunde:read","kunde:write","vermittler"})
      */
     public $email = '';
 
     /**
      * @ORM\ManyToOne(targetEntity="Vermittler", inversedBy="kunden")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"kunde"})
+     * @Groups({"kunde:read"})
      */
     private $vermittler;
 
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId($id)
+    /**
+     * @param string $id
+     * @return void
+     */
+    public function setId(string $id)
     {
         $this->id = $id;
     }
 
 
-    public function getVermittler()
+    /**
+     * @return Vermittler
+     */
+    public function getVermittler(): Vermittler
     {
         return $this->vermittler;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function setVermittler($vermittler)
     {
         if (!is_a($vermittler, 'App\Entity\Vermittler')) {

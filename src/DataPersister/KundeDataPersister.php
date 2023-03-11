@@ -16,12 +16,12 @@ use Symfony\Component\Uid\Uuid;
 class KundeDataPersister implements ContextAwareDataPersisterInterface
 {
     /**
-     * @var \ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface
+     * @var ContextAwareDataPersisterInterface
      */
     private $decorated;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $entityManager;
 
