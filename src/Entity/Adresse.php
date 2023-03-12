@@ -62,14 +62,7 @@ class Adresse
      * @ORM\Column(type="string", length=2)
      * @Groups({"adresse:read", "kunde:read"})
      */
-    private $bundesland;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Bundesland", inversedBy="adressen")
-     * @ORM\JoinColumn(name="bundesland", nullable=false, referencedColumnName="kuerzel")
-     * @Groups({"kunde:read"})
-     */
-    private Bundesland $bundeslandObj;
+    public $bundesland;
 
     /**
      * @return string|null
@@ -78,22 +71,5 @@ class Adresse
     public function getId() : ?string
     {
         return $this->adresse_id;
-    }
-
-    /**
-     * @return Bundesland
-     */
-    public function getBundesland()
-    {
-        return $this->bundeslandObj;
-    }
-
-    /**
-     * @param mixed $bundesland
-     */
-    public function setBundesland(Bundesland $bundesland)
-    {
-        $this->bundeslandObj = $bundesland;
-        $this->bundesland = $bundesland->getKuerzel();
     }
 }
