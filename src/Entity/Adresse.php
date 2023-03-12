@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity
@@ -63,6 +64,15 @@ class Adresse
      * @Groups({"adresse:read", "kunde:read"})
      */
     public $bundesland;
+
+    /**
+     * @var ArrayCollection|Details[]
+     * @ORM\OneToMany(targetEntity="Details", mappedBy="adressen")
+     * @ORM\JoinColumn(name="adresse_id", referencedColumnName="adresse_id")
+     * @Groups({"adresse:read"})
+     * @MaxDepth(1)
+     */
+    public $details;
 
     /**
      * @return string|null

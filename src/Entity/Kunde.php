@@ -105,6 +105,17 @@ class Kunde
     private $vermittler;
 
     /**
+     * @var ArrayCollection|Adresse[]
+     * @ORM\ManyToMany(targetEntity="Adresse", inversedBy="kunden")
+     * @ORM\JoinTable(name="std.kunde_adresse",
+     *     joinColumns={@ORM\JoinColumn(name="kunde_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="adresse_id", referencedColumnName="adresse_id")}
+     * )
+     * @Groups({"kunde:read"})
+     */
+    private $adressen;
+
+    /**
      * @return string
      */
     public function getId(): ?string
@@ -140,5 +151,21 @@ class Kunde
         }
 
         $this->vermittler = $vermittler;
+    }
+
+    /**
+     * @return Adresse[]|ArrayCollection
+     */
+    public function getAdressen()
+    {
+        return $this->adressen;
+    }
+
+    /**
+     * @param Adresse[]|ArrayCollection $adressen
+     */
+    public function setAdressen($adressen)
+    {
+        $this->adressen = $adressen;
     }
 }
